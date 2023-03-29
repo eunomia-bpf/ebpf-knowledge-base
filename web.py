@@ -1,7 +1,6 @@
 from pathlib import Path
 from llama_index import GPTSimpleVectorIndex
 import flask
-import json
 
 
 def run(index_file: Path):
