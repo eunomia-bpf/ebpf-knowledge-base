@@ -1,3 +1,8 @@
+env
+train_data.json
+train.lock
+data
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

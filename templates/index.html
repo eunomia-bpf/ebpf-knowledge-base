@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>eBPF 知识库</title>
+    <meta name="viewport"
+        content="width=device-width,height=device-height, user-scalable=no,initial-scale=1, minimum-scale=1, maximum-scale=1,target-densitydpi=device-dpi ">
+    <!-- You MUST include jQuery 3+ before Fomantic -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            $("#submit-button").click(() => {
+                const text = $("#text").val();
+                $("#dimmer").addClass("active");
+                $("#error-message").css("display", "none");
+                $.ajax({
+                    url: "/query",
+                    type: "POST",
+                    data: JSON.stringify({
+                        search: text
+                    }),
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: (data) => {
+                        $("#dimmer").removeClass("active");
+                        $("#response-area").css("display", "block");
+                        $("#done").css("display", "block");
+                        $("#error-message").css("display", "none");
+
+                        const respText = data.response.response;
+                        $("#response-text").text(respText);
+                    },
+                    error: (jqXHR, status, err) => {
+                        $("#dimmer").removeClass("active");
+                        $("#response-area").css("display", "block");
+                        $("#error-message").css("display", "block");
+                        $("#done").css("display", "none");
+
+                        $("#message-header").text(err);
+                        $("#message-content").text(jqXHR.responseText);
+                    }
+                })
+            })
+        });
+    </script>
+</head>
+
+<body style="background-color:#ece9e9">
+    <div class="ui container" style="margin-top:10%">
+        <div class="ui header">
+            <h1>eBPF 知识库</h1>
+        </div>
+        <div class="ui segment stacked">
+            <div class="ui dimmer" id="dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div class="ui form">
+                <div class="field">
+                    <label>查询内容</label>
+                    <input type="text" id="text" placeholder="请输入查询内容">
+                </div>
+                <input class="ui button" id="submit-button" type="submit">
+            </div>
+            <div style="display: none;" id="response-area">
+                <div class="ui divider"></div>
+                <div id="done">
+                    <div class="ui header">
+                        <h3>知识库回复</h3>
+                    </div>
+                    <div class="ui container">
+                        <pre id="response-text"></pre>
+                    </div>
+                </div>
+                <div id="error-message">
+                    <div class="ui header">
+                        <h3>发生错误</h3>
+                    </div>
+                    <div class="ui error message">
+                        <div id="message-header" class="header">
+                            错误
+                        </div>
+                        <p id="message-content"></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
