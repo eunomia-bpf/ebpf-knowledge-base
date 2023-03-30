@@ -30,7 +30,7 @@
                         $("#done").css("display", "block");
                         $("#error-message").css("display", "none");
 
-                        const respText = data.response.response;
+                        const respText = data.response;
                         $("#response-text").text(respText);
                     },
                     error: (jqXHR, status, err) => {

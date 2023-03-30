@@ -2,7 +2,6 @@ import os
 import sys
 import pathlib
 import shutil
-import web
 import train
 import extract
 ENV_VAR_NAME = "OPENAI_API_KEY"
@@ -10,6 +9,7 @@ LOCK_FILE = "train.lock"
 
 LOCAL_PATH = pathlib.Path(__file__).resolve().parent
 
+sys.executable
 
 def main() -> int:
     if ENV_VAR_NAME not in os.environ:
@@ -28,8 +28,7 @@ def main() -> int:
     else:
         print(f"{LOCK_FILE} found. Skipped training process. If you want to retrain, just delete {LOCAL_PATH/LOCK_FILE}")
     print("Starting web server..")
-    web.run(LOCAL_PATH/"data"/"train_data.json")
-    return 0
+    os.execvp("./web-server-executable", ["web-server-executable"])
 
 
 if __name__ == "__main__":
