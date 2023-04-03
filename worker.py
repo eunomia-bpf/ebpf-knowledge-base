@@ -1,4 +1,3 @@
-from email import message
 import json
 import sys
 from llama_index import GPTSimpleVectorIndex
@@ -8,7 +7,7 @@ LOCAL_PATH = pathlib.Path(__file__).resolve().parent
 
 def main():
     try:
-        model = GPTSimpleVectorIndex.load_from_disk(str(LOCAL_PATH / "data" / "train_data.json"))
+        model = GPTSimpleVectorIndex.load_from_disk(str(LOCAL_PATH / "data" / "train_data_llama.json"))
     except KeyboardInterrupt as ex:
         print(f"Failed to load model: {ex}", file=sys.stderr)
         exit(1)

@@ -1,7 +1,10 @@
 env
 train_data.json
 train.lock
+train_llama.lock
+train_langchain.lock
 data
+.chroma
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
